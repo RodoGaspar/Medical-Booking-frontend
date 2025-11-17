@@ -61,7 +61,7 @@ const AppointmentList: React.FC = () => {
         if(!confirm("¿Seguro que deseas eliminar este turno?")) return;
 
         try {
-            await axios.delete(`/appointments/${id}`);
+            await api.delete(`/appointments/${id}`);
             toast.success("Turno eliminado");
             fetchAppointments();
         } catch (err) {

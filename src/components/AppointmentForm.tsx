@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { api } from "../lib/api"
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify"
@@ -45,7 +45,7 @@ export default function AppointmentForm() {
         const fetchSlots = async () => {
             try {
                 const res = await api.get(
-                    `/availability?date=${selectedDate}`
+                    `/appointments/availability?date=${selectedDate}`
                 );
                 setAvailableSlots(res.data.availableSlots);
                 setBookedSlots(res.data.bookedSlots)
@@ -62,8 +62,7 @@ export default function AppointmentForm() {
 
     const onSubmit = async (data: AppointmentFormData) => {
         try {
-            const combinedDateTime = new Date(data.time);
-            combinedDateTime.setSeconds(0, 0); 
+            const combinedDateTime = new Date(`${data.date}T${data.time}:00`);
             const payload = {...data, date: combinedDateTime.toISOString(), time:undefined };
             
             await api.post("/appointments", payload);
@@ -129,21 +128,7 @@ export default function AppointmentForm() {
                         min={today}
                         {...register("date")}
                         className="w-full border p-2 rounded"
-                        onChange={async (e) => {
-                            const selected = e.target.value;
-                            setSelectedDate(selected);
-                            if (!selected) return;
-
-                            try {
-                                const res = await api.get(
-                                    `/appointments/availability?date=${selected}`
-                                );
-                                setAvailableSlots(res.data.availableSlots);
-                            } catch (err) {
-                                console.error(err);
-                                toast.error("Error cargando los horarios disponibles");
-                            }
-                        }}
+                        onChange={(e) => setSelectedDate(e.target.value)}
                     />
                     {errors.date && (
                         <p className="text-red-500 text-sm">{errors.date.message}</p>
