@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { Axios } from "axios";
+import { api } from "../lib/api"
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify"
 
@@ -43,8 +44,8 @@ export default function AppointmentForm() {
         setLoadingSlots(true)
         const fetchSlots = async () => {
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/appointments/availability?date=${selectedDate}`
+                const res = await api.get(
+                    `/availability?date=${selectedDate}`
                 );
                 setAvailableSlots(res.data.availableSlots);
                 setBookedSlots(res.data.bookedSlots)
@@ -65,7 +66,7 @@ export default function AppointmentForm() {
             combinedDateTime.setSeconds(0, 0); 
             const payload = {...data, date: combinedDateTime.toISOString(), time:undefined };
             
-            await axios.post("http://localhost:5000/api/appointments", payload);
+            await api.post("/appointments", payload);
             toast.success("Turno reservado con éxito");
             reset(); // clear the form after success
         } catch (err: any) {
@@ -134,8 +135,8 @@ export default function AppointmentForm() {
                             if (!selected) return;
 
                             try {
-                                const res = await axios.get(
-                                    `http://localhost:5000/api/appointments/availability?date=${selected}`
+                                const res = await api.get(
+                                    `/appointments/availability?date=${selected}`
                                 );
                                 setAvailableSlots(res.data.availableSlots);
                             } catch (err) {

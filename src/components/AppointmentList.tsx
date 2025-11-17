@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { api } from "../lib/api";
 
 interface Appointment {
     _id: string;
@@ -26,7 +27,7 @@ const AppointmentList: React.FC = () => {
     const fetchAppointments = async () => {
         setLoading(true);
         try {
-            const res = await axios.get("http://localhost:5000/api/appointments");
+            const res = await api.get("/appointments");
             setAppointments(res.data);
         } catch (err) {
             console.error(err);
@@ -43,7 +44,7 @@ const AppointmentList: React.FC = () => {
     //Update appointment status
     const handleStatusChange = async (id: string, newStatus: string) => {
         try{
-            await axios.patch(`http://localhost:5000/api/appointments/${id}/status`, {
+            await api.patch(`/appointments/${id}/status`, {
                 status: newStatus,
             });
             toast.success("Status updated!");
@@ -60,7 +61,7 @@ const AppointmentList: React.FC = () => {
         if(!confirm("¿Seguro que deseas eliminar este turno?")) return;
 
         try {
-            await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+            await axios.delete(`/appointments/${id}`);
             toast.success("Turno eliminado");
             fetchAppointments();
         } catch (err) {
