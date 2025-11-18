@@ -62,12 +62,14 @@ export default function AppointmentForm() {
 
     const onSubmit = async (data: AppointmentFormData) => {
         try {
-            const combinedDateTime = new Date(`${data.date}T${data.time}:00`);
-            const payload = {...data, date: combinedDateTime.toISOString(), time:undefined };
+            const payload = {...data, 
+                date: data.time, // send the selected ISO datetime slot 
+                time:undefined // remove time (not needed in backend)
+            };
             
             await api.post("/appointments", payload);
             toast.success("Turno reservado con éxito");
-            reset(); // clear the form after success
+            reset();
         } catch (err: any) {
             console.error(err);
             if (axios.isAxiosError(err) && err.response?.data?.message === "El horario ya está reservado") {
