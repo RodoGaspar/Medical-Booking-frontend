@@ -80,7 +80,6 @@ export default function AppointmentForm() {
         };
     }
   
-
     return (
         <div className="max-w-md mx-auto bg-white shadow-lg rounded-2xl p-6 mt-8">
             <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
@@ -146,7 +145,7 @@ export default function AppointmentForm() {
                             className="w-full border p-2 rouded"
                         >
                             <option value=""> Selecciona un horario</option>
-                            {availableSlots.map((slot) => {
+                            {[...availableSlots, ...bookedSlots].sort().filter((value, index, array) => array.indexOf(value) === index).map((slot) => {
                                 const localTime = new Date(slot).toLocaleTimeString([], {
                                     hour: "2-digit",
                                     minute: "2-digit",
@@ -169,11 +168,16 @@ export default function AppointmentForm() {
 
                 <div>
                     <label className="block font-medium">Doctor</label>
-                    <input
-                        type="text"
+                   <select
                         {...register("doctor")}
                         className="w-full border p-2 rounded"
-                    />
+                    >
+                        <option value="">Seleccione un Médico</option>
+                        <option value="Dr. Brahms">Dr. Brahms</option>
+                        <option value="Dra. Scheeling">Dra. Scheeling</option>
+                        <option value="Dr. Sforza">Dr. Sforza</option>
+                    </select>
+                    
                     {errors.doctor && (
                         <p className="text-red-500 text-sm">{errors.doctor.message}</p>
                     )}
