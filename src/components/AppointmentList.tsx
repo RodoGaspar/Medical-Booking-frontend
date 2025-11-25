@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { api } from "../lib/api";
+import  api  from "../lib/api";
 
 interface Appointment {
     _id: string;
