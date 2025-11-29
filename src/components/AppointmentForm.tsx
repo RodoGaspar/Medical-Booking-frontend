@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { api } from "../lib/api"
+import api  from "../lib/api"
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify"
 
@@ -45,7 +45,7 @@ export default function AppointmentForm() {
         const fetchSlots = async () => {
             try {
                 const res = await api.get(
-                    `/appointments/availability?date=${selectedDate}`
+                    `api/appointments/availability?date=${selectedDate}`
                 );
                 setAvailableSlots(res.data.availableSlots);
                 setBookedSlots(res.data.bookedSlots)
@@ -67,7 +67,7 @@ export default function AppointmentForm() {
                 time:undefined // remove time (not needed in backend)
             };
             
-            await api.post("/appointments", payload);
+            await api.post("api/appointments", payload);
             toast.success("Turno reservado con éxito");
             reset();
         } catch (err: any) {

@@ -1,4 +1,5 @@
 "use client"
+
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import axios from 'axios';
@@ -11,15 +12,15 @@ export default function AdminPage() {
         const token = localStorage.getItem("adminToken");
 
         if(!token) {
-            router.push("/login");
+            router.push("/admin/login");
             return;
         }
 
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/verify`, {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/admin/verify`, {
             headers: { Authorization: `Bearer ${token}`,},
         }).catch(() => {
             localStorage.removeItem("adminToken");
-            router.push("/login");
+            router.push("/admin/login");
         });
     }, []);
 

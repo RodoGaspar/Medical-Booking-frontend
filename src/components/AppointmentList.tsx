@@ -27,7 +27,7 @@ const AppointmentList: React.FC = () => {
     const fetchAppointments = async () => {
         setLoading(true);
         try {
-            const res = await api.get("/appointments");
+            const res = await api.get("api/appointments");
             setAppointments(res.data);
         } catch (err) {
             console.error(err);
@@ -44,7 +44,7 @@ const AppointmentList: React.FC = () => {
     //Update appointment status
     const handleStatusChange = async (id: string, newStatus: string) => {
         try{
-            await api.patch(`/appointments/${id}/status`, {
+            await api.patch(`api/appointments/${id}/status`, {
                 status: newStatus,
             });
             toast.success("Status updated!");
@@ -61,7 +61,7 @@ const AppointmentList: React.FC = () => {
         if(!confirm("¿Seguro que deseas eliminar este turno?")) return;
 
         try {
-            await api.delete(`/appointments/${id}`);
+            await api.delete(`api/appointments/${id}`);
             toast.success("Turno eliminado");
             fetchAppointments();
         } catch (err) {
