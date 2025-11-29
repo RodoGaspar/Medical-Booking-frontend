@@ -16,7 +16,7 @@ export default function AdminPage() {
             return;
         }
 
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/admin/verify`, {
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify`, {
             headers: { Authorization: `Bearer ${token}`,},
         }).catch(() => {
             localStorage.removeItem("adminToken");
