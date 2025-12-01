@@ -12,7 +12,6 @@ export default function Navbar() {
     const navItems = [
         { href: "/", label: "Home"},
         { href: "book", label: "Reservar turno" },
-        { href: "appointments", label: "Ver Turnos" },
         { href: "admin/login", label: "Admin" },
     ];
 
