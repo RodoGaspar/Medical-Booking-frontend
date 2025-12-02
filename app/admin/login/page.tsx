@@ -14,13 +14,13 @@ export default function AdminLogin() {
         setError("");
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`,
-            {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/login`, {
                 method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({email, password}),
-            }
-        );
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+                // 🚨 REQUIRED for sending & receiving cookies
+                credentials: "include",
+            });
 
         const data = await res.json();
 
@@ -29,8 +29,6 @@ export default function AdminLogin() {
             return;
         }
 
-        //save token
-        localStorage.setItem("adminToken", data.token);
 
         // Redirect to admin dashboard
         router.push("/admin");
