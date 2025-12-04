@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Medical Appointment Booking System – Frontend (Next.js)
 
-## Getting Started
+This is the frontend interface for the Medical Appointment Booking System.
+It allows patients to book appointments and provides an admin dashboard to manage them.
 
-First, run the development server:
+## ✨ Features
+    Fully responsive UI
+    Appointment booking form with validation
+    Admin Dashboard with:
+        Login
+        Appointment search & filtering
+        Pagination
+        Confirm / Reject / Delete actions
+    Integration with backend API
+    Secure admin session using HttpOnly cookies
+    Built using modern React patterns
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🧰 Tech Stack
+    Next.js 14+
+    React Hook Form + Zod (validation)
+    Axios
+    Tailwind CSS
+    React Toastify / shadcn/ui
+    Server Actions & API routes (depending on your structure)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔧 Environment Variables
+    Create a .env.local file:
+        NEXT_PUBLIC_API_URL=
+        
+    Example:
+        NEXT_PUBLIC_API_URL=http://localhost:5000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Installation
+    git clone <your-frontend-repo-url>
+    cd frontend
+    npm install
+    npm run dev
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    The frontend runs at:
+    http://localhost:3000
 
-## Learn More
+## 🧭 Pages / Routes
+    Route -	Description
+    / -	Appointment booking form
+    /admin/login -	Admin login
+    /admin/dashboard -	Manage appointments4
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Deployment
+    Deployed on Vercel.
+    Just push the repository and ensure you add this environment variable:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    NEXT_PUBLIC_API_URL=https://your-backend-url
