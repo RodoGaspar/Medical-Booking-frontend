@@ -11,8 +11,8 @@ export default function Navbar() {
 
     const navItems = [
         { href: "/", label: "Home"},
-        { href: "book", label: "Reservar turno" },
-        { href: "admin/login", label: "Admin" },
+        { href: "/book", label: "Reservar turno" },
+        { href: "/admin/login", label: "Admin" },
     ];
 
     return (
