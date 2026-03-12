@@ -50,3 +50,7 @@ It allows patients to book appointments and provides an admin dashboard to manag
     Just push the repository and ensure you add this environment variable:
 
     NEXT_PUBLIC_API_URL=https://your-backend-url
+
+## Demo account
+    email: admin@medbook.com
+    password: admin123

@@ -3,17 +3,47 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
     const pathname = usePathname();
     const [ isOpen, setIsOpen ] = useState(false);
+    const [ isAdmin, setIsAdmin ] = useState(false);
+
+    useEffect(() => {
+        async function checkAuth() {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify`,
+                    {credentials: "include"}
+                );
+                const data = await res.json();
+                setIsAdmin(data.ok === true);
+            } catch {
+                setIsAdmin(false);
+            }
+        }
+        checkAuth();
+    }, []);
 
     const navItems = [
         { href: "/", label: "Home"},
         { href: "/book", label: "Reservar turno" },
-        { href: "/admin/login", label: "Admin" },
+        ...(
+            isAdmin 
+            ? [
+                { href: "/admin", label: "Dashboard"},
+                { href: "/admin/logout", label: "Cerrar sesión" },
+            ]
+            : [
+                { href: "/admin/login", label: "Admin"},
+            ]
+        )
     ];
+
+    const isActive = (href: string) => {
+        if (href==="/") return pathname === "/";
+        return pathname.startsWith(href);
+    }
 
     return (
         <nav className="bg-cyan-200 text-white p-4 shadow-md mb- fixed top-0 sticky z-50">
@@ -24,13 +54,12 @@ export default function Navbar() {
                 </Link>
                 <div className="hidden sm:flex gap-6">
                     {navItems.map((item) => {
-                        const isActive = pathname === item.href;
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 className={`transition-colors ${
-                                    isActive
+                                    isActive(item.href)
                                     ? " text-blue-300 font-semibold border-b-2 border-blue-600"
                                     : "text-gray-600 hover:text-blue-500"
                                 }`}
@@ -51,13 +80,12 @@ export default function Navbar() {
             {isOpen &&(
                 <div className="sm:hidden bg-white border-t border-gray-200">
                     {navItems.map((item) => {
-                        const isActive = pathname === item.href;
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className={`block px-4 py-3 transition-colors ${isActive ? "text-blue-600 font-semibold bg-blue-50" : "text-gray-700 hover:bg-gray-100"
+                                className={`block px-4 py-3 transition-colors ${isActive(item.href) ? "text-blue-600 font-semibold bg-blue-50" : "text-gray-700 hover:bg-gray-100"
                                 }`}
                             >
                                 {item.label}
